@@ -14,7 +14,13 @@ vim.opt.incsearch = true
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 vim.opt.swapfile = false
+vim.keymap.set("v", ">", ">gv", { noremap = true, silent = true })  -- keep visual mode when using 
+vim.keymap.set("v", "<", "<gv", { noremap = true, silent = true })
 vim.keymap.set("x", "<leader>p", '"_dP')
+vim.keymap.set("n", "<leader>f", function()
+  require("conform").format({ bufnr = 0 })
+end)
+
 vim.keymap.set("n","E","$")
 local notify_original = vim.notify
 vim.notify = function(msg, ...)
@@ -33,4 +39,4 @@ end
 
 
 
-vim.opt.swapfile = false
+vim.opt.swapfile = false 

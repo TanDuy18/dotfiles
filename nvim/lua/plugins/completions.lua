@@ -1,20 +1,37 @@
 return {
 	{
 		"L3MON4D3/LuaSnip",
-		dependencies = { "saadparwaiz1/cmp_luasnip", "rafamadriz/friendly-snippets" },
-	},
-	{
-		"hrsh7th/cmp-nvim-lsp",
-		"hrsh7th/cmp-buffer",
-		"hrsh7th/cmp-path",
-		"hrsh7th/cmp-cmdline",
+		dependencies = {
+            "saadparwaiz1/cmp_luasnip", 
+            "rafamadriz/friendly-snippets"
+        },
+        config = function ()
+           require("luasnip.loaders.from_vscode").lazy_load() 
+        end, 
 	},
 	{
 		"hrsh7th/nvim-cmp",
+        dependencies = { 
+            "hrsh7th/nvim-cmp",
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-cmdline",
+            "L3MON4D3/LuaSnip",
+            "saadparwaiz1/cmp_luasnip",
+            "rafamadriz/friendly-snippets",
+            "windwp/nvim-autopairs",
+        },
 		config = function()
 			local cmp = require("cmp")
-			require("luasnip.loaders.from_vscode").lazy_load()
+            local luasnip = require("luasnip")
 
+            -- autopairs setup 
+            require("nvim-autopairs").setup()
+            local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+            cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+            -- 
+            
 			cmp.setup({
 				snippet = {
 					expand = function(args)
@@ -37,18 +54,60 @@ return {
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
-					{ name = "zls" },
 					{ name = "buffer" },
-					{ name = "path" },
-					{ name = "pylsp" },
-					{ name = "gci" },
 					{ name = "ts_ls" },
-					{ name = "gopls" },
 					{ name = "nix" },
-					{ name = "buf_ls" },
+                    { name = "path"},
 					{ name = "render-markdown" },
 				}),
 			})
-		end,
+             cmp.setup.cmdline(":", {
+                mapping = cmp.mapping.preset.cmdline(),
+            sources = {
+              { name = "path" },
+              { name = "cmdline" },
+            },
+          })
+            cmp.setup.filetype("javascript", {
+               sources = cmp.config.sources({
+                { name = "nvim_lsp" },
+                { name = "luasnip" },
+                { name = "buffer" },
+                { name = "path" },
+              }),
+            })
+
+            cmp.setup.filetype("typescript", {
+              sources = cmp.config.sources({
+                { name = "nvim_lsp" },
+                { name = "buffer" },
+                { name = "path" },
+              }),
+            })
+
+            cmp.setup.filetype("markdown", {
+              sources = cmp.config.sources({
+                { name = "buffer" },
+                { name = "path" },
+                -- { name = "spell" }, -- nếu bạn dùng gợi ý chính tả
+              }),
+            })
+
+            cmp.setup.filetype("java", {
+              sources = cmp.config.sources({
+                { name = "nvim_lsp" },
+                { name = "buffer" },
+                { name = "luasnip" },
+              }),
+            })
+
+            cmp.setup.filetype("nix", {
+              sources = cmp.config.sources({
+                { name = "nvim_lsp" },
+                { name = "buffer" },
+                { name = "path" },
+              }),
+            })
+            end,
 	},
 }

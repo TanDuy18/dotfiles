@@ -19,6 +19,7 @@ return {
 				"rose-pine",
                 "onenord",
                 "catppuccin",
+                "tokyonight"
 			}
 
 			local current_theme_index = 4
@@ -46,6 +47,12 @@ return {
         require("catppuccin").setup({})
         vim.cmd.colorscheme("catppuccin")
      end,
+    },
+    {
+     "folke/tokyonight.nvim",
+      lazy = false,
+        name = "tokyonight",
+      priority = 900,
     }
 }
 
