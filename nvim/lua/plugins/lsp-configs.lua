@@ -1,4 +1,4 @@
-return {
+	return {
 	{
 		"williamboman/mason.nvim",
 		-- version = "v1.11.0",
@@ -21,68 +21,88 @@ return {
 		config = function()
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 			local lspconfig = require("lspconfig")
-
-            local function on_attach(_, bufnr)
-                local opts = { buffer = bufnr }
-                vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-                vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-                vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-                vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-                vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-                vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-                vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
-            end
-
-           local function with_capabilities(name, opts)
-                opts = opts or {}
-                opts.capabilities = capabilities
-                opts.on_attach = on_attach
-                lspconfig[name].setup(opts)
-           end
-
 			-- lua
-	        with_capabilities("lua_ls" , {
-                settings = {
-                    Lua = {
-                        diagnostics = { globals = {"vim"} },
-                        workspace = {
-                            library = vim.api.nvim_get_runtime_file("",true), 
-                            checkThirdParty = false,
-                            ignoreDir = {
-                                "meta",
-                                "mason/packages/lua-language-server/meta",
+			lspconfig.lua_ls.setup({
+				capabilities = capabilities,
+				settings = {
+					Lua = {
+						diagnostics = {
+							globals = { "vim" },
+						},
+						workspace = {						
+                            library = {
+                              vim.env.VIMRUNTIME,
+                              vim.fn.stdpath("config"),
+                              unpack(vim.api.nvim_get_runtime_file("", true)),
                             },
-                        },
-                        telemetry = { enable = false }, 
-                    }
-                }
-            })	
+							checkThirdParty = false,
+                            maxPreload = 10000, 
+                            preloadFileSize = 10000,
+						},
+						telemetry = {
+							enable = false,
+						},
+					},
+				},
+			})
 			-- typescript
-            with_capabilities("ts_ls")
-			-- JsMason
-            with_capabilities("eslint")
-			-- zig
-			with_capabilities("zls")	
-            -- yaml
-            with_capabilities("yamlls")
-            -- tailwindcss
-			with_capabilities("tailwindcss")
+			lspconfig.ts_ls.setup({
+				capabilities = capabilities,
+			})
+			-- Js
+			lspconfig.eslint.setup({
+				capabilities = capabilities,
+			})
+		-- tailwindcss
+			lspconfig.tailwindcss.setup({
+				capabilities = capabilities,
+			})
+		--java
+			-- lspconfig.jdtls.setup({
+			--     settings = {
+			--         java = {
+			--             configuration = {
+			--                 runtimes = {
+			--                     {
+			--                         name = "JavaSE-23",
+			--                         path = "/opt/homebrew/Cellar/openjdk/23.0.2/libexec/openjdk.jdk/Contents/Home",
+			--                         default = true,
+			--                     },
+			--                 },
+			--             },
+			--         },
+			--     },
+			-- })
 			-- nix
-            with_capabilities("rnix")			
-            -- protocol buffer
-            with_capabilities("pylsp")	
-            -- docker composed
-            with_capabilities("docker_compose_language_service")
-		    -- python
-            with_capabilities("pylsp")
-
-            vim.keymap.set("n", "<leader>fm", function()
+			lspconfig.rnix.setup({ capabilities = capabilities })
+            -- docker compose
+			lspconfig.docker_compose_language_service.setup({ capabilities = capabilities })
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = "proto",
+				callback = function()
+					lspconfig.buf_language_server.setup({
+						capabilities = capabilities,
+					})
+				end,
+			})
+		    -- bash
+			lspconfig.bashls.setup({ capabilities = capabilities })
+			-- lsp kepmap setting
+			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
+			vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
+			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
+			vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {})
+			vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
+			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
+			vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
+			-- list all methods in a file
+			-- working with go confirmed, don't know about other, keep changing as necessary
+			vim.keymap.set("n", "<leader>fm", function()
 				local filetype = vim.bo.filetype
 				local symbols_map = {
 					javascript = "function",
 					typescript = "function",
 					java = "class",
-					lua = "function",
 				}
 				local symbols = symbols_map[filetype] or "function"
 				require("fzf-lua").lsp_document_symbols({ symbols = symbols })

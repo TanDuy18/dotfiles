@@ -1,25 +1,13 @@
 return {
 	{
 		"rebelot/kanagawa.nvim",
-		name = "kanagawa",
-		priority = 900,
-	},
-	{
-		"rose-pine/neovim",
-		name = "rose-pine",
-		priority = 1000,
-	}, 
-    {
-     'rmehri01/onenord.nvim',
-     name = "onenord",
-     priority = 1300,
-     config = function()
+        priority = 900 ,
+		name = "kanagawa",    
+        config = function()
         local themes = {
 				"kanagawa",
 				"rose-pine",
-                "onenord",
                 "catppuccin",
-                "tokyonight"
 			}
 
 			local current_theme_index = 4
@@ -39,6 +27,11 @@ return {
 		end, 
     },
     {
+		"rose-pine/neovim",
+		name = "rose-pine",
+		priority = 1000,
+	},
+    {
      "catppuccin/nvim", name = "catppuccin",
      priority = 1400,
      lazy = false ,
@@ -48,11 +41,5 @@ return {
         vim.cmd.colorscheme("catppuccin")
      end,
     },
-    {
-     "folke/tokyonight.nvim",
-      lazy = false,
-        name = "tokyonight",
-      priority = 900,
-    }
 }
 

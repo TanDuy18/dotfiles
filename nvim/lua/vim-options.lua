@@ -9,6 +9,9 @@ vim.cmd("set cursorline")
 vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#ead84e", bold = true })     -- Số dòng đang đứng
 vim.api.nvim_set_hl(0, "LineNr", { fg = "#808080"})       -- Các số dòng còn lại
 vim.api.nvim_set_option("clipboard", "unnamed")
+    
+
+
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
@@ -37,6 +40,7 @@ vim.notify = function(msg, ...)
 	return notify_original(msg, ...)
 end
 
+vim.opt.incsearch = true
+vim.opt.termguicolors = true 
+vim.opt.updatetime = 50 
 
-
-vim.opt.swapfile = false 
