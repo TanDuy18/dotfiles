@@ -1,16 +1,16 @@
 return {
-	{
-		"rebelot/kanagawa.nvim",
-        priority = 900 ,
-		name = "kanagawa",    
+	{ 	
+        "rose-pine/neovim",
+		name = "rose-pine",
+		priority = 1000 , 
         config = function()
         local themes = {
-				"kanagawa",
 				"rose-pine",
                 "catppuccin",
+                "everforest",
 			}
 
-			local current_theme_index = 4
+			local current_theme_index = 1
 			-- Set default theme (first theme)
 			vim.cmd.colorscheme(themes[current_theme_index])
 
@@ -41,5 +41,13 @@ return {
         vim.cmd.colorscheme("catppuccin")
      end,
     },
+	{
+		"sainnhe/everforest",
+        name = "everforest" , 
+		priority = 800, -- make sure to load this before all the other start plugins
+		config = function()
+		    	vim.cmd("colorscheme everforest")
+		end,
+	},
 }
 
