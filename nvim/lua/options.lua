@@ -1,30 +1,25 @@
 vim.cmd("set expandtab")
-vim.cmd("set tabstop=2")
+vim.cmd("set tabstop=4")
 vim.cmd("set softtabstop=4")
 vim.cmd("set shiftwidth=4")
 vim.g.mapleader = " "
 vim.cmd("set number")
-vim.cmd("set norelativenumber")
+vim.cmd("set relativenumber")
 vim.cmd("set cursorline")
-vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#ead84e", bold = true })     -- Số dòng đang đứng
-vim.api.nvim_set_hl(0, "LineNr", { fg = "#808080"})       -- Các số dòng còn lại
+vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "grey" })
+vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "grey" })
+vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "grey"})
 vim.api.nvim_set_option("clipboard", "unnamed")
-    
-
-
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
+-- move selected lines
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
-vim.opt.swapfile = false
-vim.keymap.set("v", ">", ">gv", { noremap = true, silent = true })  -- keep visual mode when using 
-vim.keymap.set("v", "<", "<gv", { noremap = true, silent = true })
+-- paste over highlight word
 vim.keymap.set("x", "<leader>p", '"_dP')
-vim.keymap.set("n", "<leader>f", function()
-  require("conform").format({ bufnr = 0 })
-end)
+vim.opt.colorcolumn = "94"
 
-vim.keymap.set("n","E","$")
+-- fk llm-ls
 local notify_original = vim.notify
 vim.notify = function(msg, ...)
 	if
@@ -39,8 +34,4 @@ vim.notify = function(msg, ...)
 	end
 	return notify_original(msg, ...)
 end
-
-vim.opt.incsearch = true
-vim.opt.termguicolors = true 
-vim.opt.updatetime = 50 
-
+vim.opt.swapfile = false
