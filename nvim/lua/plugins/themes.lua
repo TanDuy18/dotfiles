@@ -1,0 +1,53 @@
+-- return {
+--     {  
+--         "ful1e5/onedark.nvim", 
+--            name = "onedark", 
+--            priority = 900, 
+--            config = function() 
+--
+--                 -- require("onedark").setup({
+--                 --     style = "dark", 
+--                 --     transparent = true,
+--                 -- })
+--
+--                local themes = {"onedark", "gruvbox", "everforest"}
+--                local current_theme_index = 1 
+--                vim.cmd.colorscheme(themes[current_theme_index])
+--
+--                vim.keymap.set("n","<leader>nt", function() 
+--                     current_theme_index = current_theme_index + 1 
+--
+--                     if current_theme_index > #themes then 
+--                         current_theme_index = 1 
+--                     end
+--                     local theme = themes[current_theme_index] 
+--                     vim.cmd.colorscheme(theme) 
+--                     print("Changed nvim theme to: " .. theme) 
+--                 end, { noremap = true, silent = true } )
+--             end,
+--     }, 
+--     {     
+--         "ellisonleao/gruvbox.nvim", 
+--         priority = 999 ,
+--         config = true,   
+--         name = "gruvbox",
+--     }, 
+--     {
+--           "neanias/everforest-nvim",
+--           version = false,
+--           lazy = false,
+--           name = "everforest", 
+--           priority = 1200,
+--     }, 
+-- }
+--
+return {
+	"sainnhe/gruvbox-material",
+	lazy = false,
+	priority = 1000,
+	opts = function()
+		vim.g.gruvbox_material_enable_italic = true
+		vim.g.gruvbox_material_background = "soft"
+		vim.cmd.colorscheme("gruvbox-material")
+	end,
+}

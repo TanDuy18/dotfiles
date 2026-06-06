@@ -1,0 +1,53 @@
+return {
+--     "xiyaowong/transparent.nvim",
+--         config = function()
+-- 		require("transparent").setup({
+-- 			enable = true,
+-- 			extra_groups = {
+-- 				"Normal",
+-- 				"NormalNC",
+-- 				"TelescopeBorder",
+-- 				-- "NvimTreeNormal",
+--                 "CursorLine",
+--                 "CursorLineNr",
+--                 "LineNr",
+-- 				-- "LualineNormal",
+-- 				"FzfLuaBorder",
+-- 				"FzfLuaNormal",
+-- 				"FzfLuaTitle",
+-- 				"FzfLuaPreviewBorder",
+-- 				"FzfLuaPreviewNormal",
+-- 				"FzfLuaPreviewTitle",
+--
+--
+--                 --NeoTree
+--                 "NvimTreeNormal",
+--                 "NvimTreeNormalNC",
+--                 "NvimTreeWinSeparator",
+--                 "NvimTreeEndOfBuffer",
+--
+--
+-- 			},
+-- 		})
+-- require("transparent").clear_prefix("NvimTree")
+-- 		-- require("transparent").clear_prefix("lualine")
+-- 		-- depends on pc, these settings are needed
+-- 		vim.cmd("highlight Normal guibg=NONE")
+-- 		vim.cmd("highlight NormalNC guibg=NONE")
+--         vim.cmd("highlight CursorLine guibg=NONE")
+--         vim.cmd("highlight CursorLineNr guibg=NONE")
+--         vim.cmd("highlight LineNr guibg=NONE")
+--
+--
+--         vim.api.nvim_create_autocmd("ColorScheme", {
+--                 callback = function()
+--                     vim.cmd("highlight Normal guibg=NONE")
+--                     vim.cmd("highlight NormalNC guibg=NONE")
+--                     vim.cmd("highlight CursorLine guibg=NONE")
+--                     vim.cmd("highlight CursorLineNr guibg=NONE")
+--                     vim.cmd("highlight LineNr guibg=NONE")
+--                 end,
+--             })
+--
+--         end,
+}
